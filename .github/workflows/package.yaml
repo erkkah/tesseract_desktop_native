@@ -8,6 +8,9 @@ jobs:
       - name: install libs
         run: brew install tesseract leptonica
 
+      - name: santity check
+        run: find "${HOMEBREW_CELLAR}/tesseract"
+
       - name: copy libs
         run: |
           cp "${HOMEBREW_CELLAR}/tesseract/*/lib/libtesseract.a" .
