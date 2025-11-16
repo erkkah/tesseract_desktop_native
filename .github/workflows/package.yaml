@@ -44,7 +44,7 @@ jobs:
       - name: sanity check
         run: |
           dir ${{ github.workspace }}
-          dir /
+          dir /mingw64/lib
 
       - name: store artifacts
         uses: actions/upload-artifact@v4
