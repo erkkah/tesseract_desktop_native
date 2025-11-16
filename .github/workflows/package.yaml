@@ -13,16 +13,16 @@ jobs:
 
       - name: copy libs
         run: |
-          cp ${HOMEBREW_CELLAR}/tesseract/*/lib/libtesseract.a .
-          cp ${HOMEBREW_CELLAR}/leptonica/*/lib/libleptonica.a .
+          cp ${HOMEBREW_CELLAR}/tesseract/*/lib/libtesseract.a ${{ github.workspace }}
+          cp ${HOMEBREW_CELLAR}/leptonica/*/lib/libleptonica.a ${{ github.workspace }}
 
       - name: store artifacts
         uses: actions/upload-artifact@v4
         with:
             name: macos
             path: |
-              "libtesseract.a"
-              "libleptonica.a"
+              ${{ github.workspace }}/libtesseract.a
+              ${{ github.workspace }}/libleptonica.a
 
   release:
     if: startsWith(github.ref, 'refs/tags/')
