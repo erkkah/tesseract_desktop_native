@@ -42,7 +42,9 @@ jobs:
           cp /mingw64/lib/libleptonica.a ${{ github.workspace }}
 
       - name: sanity check
-        run: ls ${{ github.workspace }}
+        run: |
+          dir ${{ github.workspace }}
+          dir \mingw64
 
       - name: store artifacts
         uses: actions/upload-artifact@v4
