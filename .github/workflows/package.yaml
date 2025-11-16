@@ -13,8 +13,8 @@ jobs:
 
       - name: copy libs
         run: |
-          cp "${HOMEBREW_CELLAR}/tesseract/*/lib/libtesseract.a" .
-          cp "${HOMEBREW_CELLAR}/leptonica/*/lib/libleptonica.a" .
+          cp ${HOMEBREW_CELLAR}/tesseract/*/lib/libtesseract.a .
+          cp ${HOMEBREW_CELLAR}/leptonica/*/lib/libleptonica.a .
 
       - name: store artifacts
         uses: actions/upload-artifact@v4
