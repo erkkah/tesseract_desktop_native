@@ -41,6 +41,9 @@ jobs:
           cp /mingw64/lib/libtesseract.a ${{ github.workspace }}
           cp /mingw64/lib/libleptonica.a ${{ github.workspace }}
 
+      - name: sanity check
+        run: ls ${{ github.workspace }}
+
       - name: store artifacts
         uses: actions/upload-artifact@v4
         with:
