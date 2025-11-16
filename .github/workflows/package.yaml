@@ -1,0 +1,36 @@
+name: package
+on: push
+
+jobs:
+  package-macos:
+    runs-on: macos-latest
+    steps:
+      - name: install libs
+        run: brew install tesseract leptonica
+
+      - name: store artifacts
+        uses: actions/upload-artifact@v4
+        with:
+            name: macos
+            path: |
+              "${HOMEBREW_CELLAR}/tesseract/*/lib/tesseract.a"
+              "${HOMEBREW_CELLAR}/leptonica/*/lib/leptonica.a"
+
+  release:
+    if: github.ref_type == "tag"
+
+    needs:
+      - package-macos
+
+    steps:
+      - name: fetch artifacts
+        uses: actions/download-artifact@v5
+        with:
+            name: macos
+
+      - name: release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            tesseract.a
+            leptonica.a
