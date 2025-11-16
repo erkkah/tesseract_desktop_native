@@ -33,8 +33,8 @@ jobs:
 
       - name: install libs
         run: |
-          pacman -S mingw-w64-x86_64-leptonica
-          pacman -S mingw-w64-x86_64-tesseract-ocr
+          pacman --noconfirm -S mingw-w64-x86_64-leptonica
+          pacman --noconfirm -S mingw-w64-x86_64-tesseract-ocr
 
       - name: copy libs
         run: |
