@@ -34,15 +34,16 @@ jobs:
           pacman --noconfirm -S mingw-w64-x86_64-leptonica
           pacman --noconfirm -S mingw-w64-x86_64-tesseract-ocr
 
-      - name: copy libs
-        run: |
-          copy \mingw64\lib\libtesseract.a ${{ github.workspace }}
-          copy \mingw64\lib\libleptonica.a ${{ github.workspace }}
-
       - name: sanity check
         run: |
           dir ${{ github.workspace }}
-          dir \mingw64\lib
+          dir C:\
+          dir D:\
+
+      - name: copy libs
+        run: |
+          copy C:\mingw64\lib\libtesseract.a ${{ github.workspace }}
+          copy C:\mingw64\lib\libleptonica.a ${{ github.workspace }}
 
       - name: store artifacts
         uses: actions/upload-artifact@v4
