@@ -23,34 +23,32 @@ jobs:
 
   package-windows:
     runs-on: windows-latest
-    defaults:
-      run:
-        shell: msys2 {0}
     steps:
       - uses: msys2/setup-msys2@v2
         with:
           msystem: MINGW64
 
       - name: install libs
+        shell: msys2 {0}
         run: |
           pacman --noconfirm -S mingw-w64-x86_64-leptonica
           pacman --noconfirm -S mingw-w64-x86_64-tesseract-ocr
 
       - name: copy libs
         run: |
-          cp /mingw64/lib/libtesseract.a ${{ github.workspace }}
-          cp /mingw64/lib/libleptonica.a ${{ github.workspace }}
+          copy \mingw64\lib\libtesseract.a ${{ github.workspace }}
+          copy \mingw64\lib\libleptonica.a ${{ github.workspace }}
 
       - name: sanity check
         run: |
           dir ${{ github.workspace }}
-          dir /mingw64/lib
+          dir \mingw64\lib
 
       - name: store artifacts
         uses: actions/upload-artifact@v4
         with:
             name: windows
-            path: ${{ github.workspace }}
+            path: ${{ github.workspace }}\*.a
 
   release:
     if: startsWith(github.ref, 'refs/tags/')
