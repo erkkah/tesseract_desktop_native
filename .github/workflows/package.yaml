@@ -8,18 +8,17 @@ jobs:
       - name: install libs
         run: brew install tesseract leptonica
 
-      - name: copy libs
+      - name: build
         run: |
-          cp ${HOMEBREW_CELLAR}/tesseract/*/lib/libtesseract.a ${{ github.workspace }}
-          cp ${HOMEBREW_CELLAR}/leptonica/*/lib/libleptonica.a ${{ github.workspace }}
+          mkdir -p build
+          cmake -B build -DSTATICS_ROOT=${HOMEBREW_PREFIX}/lib
+          cmake --build build
 
       - name: store artifacts
         uses: actions/upload-artifact@v4
         with:
             name: macos
-            path: |
-              ${{ github.workspace }}/libtesseract.a
-              ${{ github.workspace }}/libleptonica.a
+            path: ${{ github.workspace }}/build/libtesseract.dylib
 
   package-windows:
     runs-on: windows-latest
