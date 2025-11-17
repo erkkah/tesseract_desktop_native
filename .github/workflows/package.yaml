@@ -68,12 +68,13 @@ jobs:
             - package-windows
 
         steps:
-            - name: fetch artifacts
-              uses: actions/download-artifact@v5
+            - uses: actions/download-artifact@v5
               with:
-                  name:
-                    - macos
-                    - windows
+                  name: macos
+
+            - uses: actions/download-artifact@v5
+              with:
+                  name: windows
 
             - name: release
               uses: softprops/action-gh-release@v2
