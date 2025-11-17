@@ -25,6 +25,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: msys2/setup-msys2@v2
+        id: msys2
         with:
           msystem: MINGW64
 
@@ -35,15 +36,16 @@ jobs:
           pacman --noconfirm -S mingw-w64-x86_64-tesseract-ocr
 
       - name: sanity check
+        env:
+          MSYS2: ${{ steps.msys2.outputs.msys2-location }}
         run: |
           dir ${{ github.workspace }}
-          dir C:\
-          dir D:\
+          dir "$env:MSYS2"
 
       - name: copy libs
         run: |
-          copy C:\mingw64\lib\libtesseract.a ${{ github.workspace }}
-          copy C:\mingw64\lib\libleptonica.a ${{ github.workspace }}
+          copy "${{ steps.msys2.outputs.msys2-location }}\mingw64\lib\libtesseract.a" ${{ github.workspace }}
+          copy "${{ steps.msys2.outputs.msys2-location }}\mingw64\lib\libleptonica.a" ${{ github.workspace }}
 
       - name: store artifacts
         uses: actions/upload-artifact@v4
